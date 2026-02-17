@@ -43,6 +43,7 @@ app.post('/register',  (req, res) => {
 app.post('/login', (req, res) => {
   const { email, password } = req.body;
 
+
   UserModel.findOne({ email: email })
     .then (user =>{
       if(user){
@@ -51,24 +52,28 @@ app.post('/login', (req, res) => {
           if (response){
             const token = jwt.sign({ email: user.email, username :user.username },
                "jwt-secret-key", { expiresIn: '1d' });
-               res.cookie('token', token , { 
+            res.cookie('token', token , { 
                               httpOnly: true,
-                              sameSite: 'lax'}
-                          );
-               return res.json("Login Successfull");
+                              sameSite: 'lax',
+                              maxAge: 24 * 60 * 60 * 1000
+                            });
+          return res.json("Login Successfull");
           }
 
           else{
             return res.json("Password Incorrect");
           }
         })
-      }
+        .catch(err => res.json(err));
+      } 
       else{
-        return res.json("User not found" )
+        return res.json("User Not Found");
       }
     })
-
     .catch(err => res.json(err));
+
+
+
 });
 
 
