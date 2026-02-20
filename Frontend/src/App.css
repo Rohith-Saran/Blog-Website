@@ -129,3 +129,33 @@
   cursor: pointer;
   background-color: #125fb6;
 }
+
+/* Updated styling for the Post component to make it more visually appealing and responsive   */
+
+.post{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 80%;
+  gap: 20px;
+  border: 2px solid #01227d;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 20px;
+  margin-bottom: 50px;
+  margin-top: 50px;
+}
+.post img{
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+.post .post_text{
+  width: 100%;
+  font-family: 'Arial', sans-serif;
+  color: #333333;
+  font-size: 18px;
+}
+

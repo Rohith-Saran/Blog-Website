@@ -95,6 +95,15 @@ app.post('/create', upload.single('file'), (req, res) => {
     .catch(err => res.json(err));
 });
 
+// Serve static files from the "public" directory, which includes uploaded images. This allows the frontend to access images via URLs like http://localhost:3001/Images/filename.jpg
+app.use(express.static('public'));
+
+app.get('/getposts', (req, res) => {     
+  PostModel.find()
+    .then(posts => res.json(posts))
+    .catch(err => res.json(err));
+});
+
 app.listen(3001, () => {
   console.log('Server is running ');
 });
