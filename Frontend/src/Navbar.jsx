@@ -7,7 +7,7 @@ function Navbar() {
 
         <div className='Header'><h1>Blog App</h1></div>
         <div className='Links'>
-            <a href=''>Home</a>
+            <a href='/'>Home</a>
             <Link to="/create" className='create'>Create</Link>
             <a href=''>Connect</a>
         </div>

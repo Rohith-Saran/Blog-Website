@@ -1,21 +1,28 @@
 import React from 'react'
 import {useState } from 'react'
 import axios from 'axios'
-import { useNavigate } from 'react-router-dom'
-const navigate = useNavigate();
 
 function Create() {
 
     const [title, setTitle] = useState('')
     const [desc, setDesc] = useState('')
     const [file, setFile] = useState(null)
-
+  
+    const formData = new FormData();
+    formData.append('title', title);
+    formData.append('desc', desc);
+    formData.append('file', file);
     const handleSubmit = (e) => {
         e.preventDefault()
-        axios.post('http://localhost:3001/create', {title,desc})
+        axios.post('http://localhost:3001/create', formData)
         .then((res) => {
-            console.log(res.data)
-                navigate("/")
+            if (res.status === 200) {
+                window.location.href = '/' // Redirect to home page after successful post creation, you can also use navigate('/') if using react-router-dom
+                // Reload the page to reflect the new post-> window.location.reload(); 
+            } else {
+                alert("Failed to create post");
+            }   
+
 
         }).catch((err) => {
             console.log(err)

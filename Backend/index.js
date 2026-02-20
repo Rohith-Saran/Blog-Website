@@ -76,10 +76,22 @@ app.post('/login', (req, res) => {
 });
 
 
-app.post('/create', (req, res) => {
+const storage = multer.diskStorage({    
+  destination: (req, file, cb) => {
+    cb(null, 'Public/Images');
+  },
+  filename: (req, file, cb) => {
+    cb(null, file.fieldname + "_" + Date.now() + path.extname(file.originalname));
+  }
+});
+
+const upload = multer({ storage: storage });
+  
+
+app.post('/create', upload.single('file'), (req, res) => {
   const { title, desc } = req.body;
-  PostModel.create({ title, desc })
-    .then(post => res.json(post))
+  PostModel.create({ title, desc, file: req.file.filename })
+    .then(result => res.json(result))
     .catch(err => res.json(err));
 });
 
