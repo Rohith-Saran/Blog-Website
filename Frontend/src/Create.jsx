@@ -1,6 +1,8 @@
 import React from 'react'
-import {useState} from 'react'
+import {useState } from 'react'
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
+const navigate = useNavigate();
 
 function Create() {
 
@@ -10,6 +12,14 @@ function Create() {
 
     const handleSubmit = (e) => {
         e.preventDefault()
+        axios.post('http://localhost:3001/create', {title,desc})
+        .then((res) => {
+            console.log(res.data)
+                navigate("/")
+
+        }).catch((err) => {
+            console.log(err)
+        })  
 
     }       
 

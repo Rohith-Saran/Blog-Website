@@ -8,6 +8,7 @@ const multer = require('multer');
 const path = require('path');
 
 const UserModel = require('./Models/UserModel');
+const PostModel = require('./Models/PostModel');
 
 
 const app = express();
@@ -72,10 +73,15 @@ app.post('/login', (req, res) => {
     })
     .catch(err => res.json(err));
 
-
-
 });
 
+
+app.post('/create', (req, res) => {
+  const { title, desc } = req.body;
+  PostModel.create({ title, desc })
+    .then(post => res.json(post))
+    .catch(err => res.json(err));
+});
 
 app.listen(3001, () => {
   console.log('Server is running ');
