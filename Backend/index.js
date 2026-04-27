@@ -27,7 +27,32 @@ mongoose.connect('mongodb://localhost:27017/BlogApp')
    .catch((err) => {
    console.error('Error connecting to MongoDB:', err)});
 
+const verifyUser = (req, res, next) => {
+  const token = req.cookies.token; // Get the token from cookies
+
+  if (!token) {
+    return res.status(401).json({ message: 'Unauthorized' });
+  }
+
+  else{
+     jwt.verify(token, 'jwt-secret-key',(err,decoded) => { // Verify the token using the same secret key used for signing
+      if (err) {
+        return res.status(401).json({ message: 'Invalid token' });
+      }
+      req.email = decoded.email;
+      req.username = decoded.username;
+      next(); // Proceed to the next middleware or route handler
+    });
+  }
+}; 
    
+app.get('/',verifyUser, (req, res) => {
+  res.json({ email: req.email, username: req.username});
+});
+
+
+
+
 app.post('/register',  (req, res) => {
   const { username, email, password } = req.body;
   // Hash the password before saving to the database , 10 is the salt rounds for bcrypt which determines the computational cost of hashing the password. A higher number means more security but also more time to hash.
@@ -76,6 +101,16 @@ app.post('/login', (req, res) => {
 });
 
 
+app.get('/logout', (req, res) => {
+  res.clearCookie('token'); // Clear the token cookie to log out the user
+  res.json("Logout Successfull");
+}
+);
+
+
+
+
+
 const storage = multer.diskStorage({    
   destination: (req, file, cb) => {
     cb(null, 'Public/Images');
@@ -103,6 +138,8 @@ app.get('/getposts', (req, res) => {
     .then(posts => res.json(posts))
     .catch(err => res.json(err));
 });
+
+
 
 app.listen(3001, () => {
   console.log('Server is running ');

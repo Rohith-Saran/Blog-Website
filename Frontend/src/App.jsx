@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import './App.css'
 import Navbar from './Navbar'
@@ -7,12 +7,28 @@ import Login from './Login'
 import Home from './Home'
 import Create from './Create'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { createContext } from 'react'
+import axios from 'axios'
+
+export const UserContext = createContext()
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [user, setUser] = useState({})
+
+  useEffect(() => {
+    axios.get('http://localhost:3001/', { withCredentials: true })
+      .then(user => 
+        setUser(user.data)
+      )
+      .catch(err => console.log(err))
+  }, [])  
+
+
+
 
   return (
     <>
+    <UserContext.Provider value={user}>
 
     <Router>
       <Navbar />
@@ -24,6 +40,7 @@ function App() {
       </Routes>
     </Router>
 
+    </UserContext.Provider>
 
     </>
   )
