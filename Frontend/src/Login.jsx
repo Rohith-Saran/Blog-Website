@@ -17,7 +17,7 @@ function Login() {
         axios.post('http://localhost:3001/login', {email, password}, { withCredentials: true }) // withCredentials: true is used to include cookies in the request, which is necessary for authentication purposes when the server sets a cookie upon successful login.
         .then((response) => {
           if (response.data === "Login Successfull") {
-        navigate("/")
+            window.location.href = '/' 
       } else {
         // Show error to user
         alert(response.data) // Shows "Password Incorrect" or "User not found"
