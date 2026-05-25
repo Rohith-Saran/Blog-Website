@@ -139,16 +139,5 @@ If you wish to change the connection string, edit line 24 in `Backend/index.js`.
    ```
 4. Click on the local link provided by Vite (typically `http://localhost:5173`) to launch the application.
 
----
-
-## 🔮 Future Enhancements & Goals
-
-To take this platform further, I plan to:
-1.  **Associate Posts with Authors**: Relate the `PostModel` schema to `UserModel` using MongoDB references (`mongoose.Schema.Types.ObjectId`) to display the creator's name on each post.
-2.  **Add Post Moderation**: Implement options to edit or delete posts exclusively for the author who created them.
-3.  **Upgrade Content Editor**: Replace the standard `<textarea>` element with a rich-text editor (such as Quill.js or React Quill) to support headings, bold text, lists, and inline links.
-4.  **Incorporate Loading Skeletons**: Introduce beautiful fallback visual loaders while fetching posts from the backend server to elevate the user experience.
-
----
 
 Developed with ❤️ by **Rohith Saran**
